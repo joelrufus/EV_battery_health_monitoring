@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EV Assistant Chatbot</title>
+  <style>
+    :root {
+      --neon-green: #39ff14;
+      --neon-purple: #bc13fe;
+      --dark-bg: rgba(0, 0, 0, 0.9);
+      --hud-yellow: #ffd300;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: white;
+      overflow-x: hidden;
+      background: #000;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background-image: url('rm373batch10-09o.jpg');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.4) contrast(1.2) hue-rotate(90deg);
+      opacity: 0.8;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, rgba(57, 255, 20, 0.05), rgba(188, 19, 254, 0.05));
+      z-index: -1;
+    }
+
+    .chat-container {
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border-radius: 15px;
+      max-width: 500px;
+      width: 90%;
+      margin: 2rem auto;
+      border: 1px solid transparent;
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    .chat-container::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, var(--neon-green), var(--neon-purple));
+      z-index: -1;
+      border-radius: 15px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .chat-container:hover::before {
+      opacity: 0.3;
+    }
+
+    h2 {
+      font-size: 2rem;
+      text-shadow: 0 0 10px var(--neon-green);
+      margin: 0 0 2rem 0;
+      letter-spacing: 2px;
+      text-align: center;
+    }
+
+    .messages {
+      max-height: 400px;
+      overflow-y: auto;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--neon-green);
+      border-radius: 5px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(5px);
+    }
+
+    .msg {
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border-left: 4px solid var(--neon-green);
+      background: rgba(0, 255, 65, 0.05);
+      border-radius: 5px;
+      font-size: 14px;
+      word-wrap: break-word;
+      position: relative;
+    }
+
+    .msg.user {
+      text-align: right;
+      border-left: none;
+      border-right: 4px solid var(--neon-purple);
+      background: rgba(188, 19, 254, 0.05);
+    }
+
+    .msg.bot {
+      text-align: left;
+    }
+
+    .msg.bot ul {
+      list-style-type: disc;
+      padding-left: 20px;
+      margin: 0;
+    }
+
+    .msg.bot ol {
+      list-style-type: decimal;
+      padding-left: 20px;
+      margin: 0;
+    }
+
+    .msg.bot li {
+      margin: 10px 0;
+      line-height: 1.5;
+      padding-left: 5px;
+    }
+
+    .msg.bot p {
+      margin: 10px 0;
+      line-height: 1.5;
+    }
+
+    .msg.bot strong {
+      color: var(--hud-yellow);
+    }
+
+    label {
+      color: var(--hud-yellow);
+      text-shadow: 0 0 5px var(--hud-yellow);
+      margin-bottom: 10px;
+      display: block;
+      font-size: 0.9rem;
+    }
+
+    select, input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--neon-green);
+      color: white;
+      font-family: inherit;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+      height: 45px;
+    }
+
+    select:focus, input[type="text"]:focus {
+      outline: none;
+      box-shadow: 0 0 15px var(--neon-green);
+      border-color: var(--neon-purple);
+    }
+
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml;utf8,<svg fill='%2339ff14' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+    }
+
+    #userQuestion {
+      width: 70%;
+      display: inline-block;
+      vertical-align: top;
+      margin-right: 10px;
+    }
+
+    button {
+      background: linear-gradient(45deg, var(--neon-purple), var(--neon-green));
+      border: none;
+      padding: 15px 30px;
+      color: black;
+      font-weight: bold;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 1rem;
+      display: inline-block;
+      height: 45px;
+      box-sizing: border-box;
+    }
+
+    button:hover {
+      box-shadow: 0 0 20px var(--neon-green);
+    }
+
+    @media (max-width: 768px) {
+      .chat-container {
+        margin: 1rem;
+        padding: 1.5rem;
+      }
+      #userQuestion {
+        width: 100%;
+        margin-bottom: 10px;
+        margin-right: 0;
+      }
+      button {
+        width: 100%;
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <h2>🤖 EV Assistant Chatbot</h2>
+
+    <!-- Chat window -->
+    <div class="messages" id="chatBox"></div>
+
+    <!-- Vehicle selector (optional) -->
+    <label for="vehicleSelect">Select Vehicle to get personalized recommendations and suggestions:</label>
+    <select id="vehicleSelect">
+      <option value="">--No Vehicle--</option>
+    </select>
+
+    <input type="text" id="userQuestion" placeholder="Ask an EV question..." />
+    <button onclick="askChatbot()">Ask</button>
+  </div>
+
+  <script>
+    const chatBox = document.getElementById("chatBox");
+    const vehicleSelect = document.getElementById("vehicleSelect");
+    const userQuestion = document.getElementById("userQuestion");
+
+    const token = localStorage.getItem("token");
+
+    window.onload = async function () {
+      if (!token) {
+        return;
+      }
+
+      try {
+        const res = await fetch("http://localhost:5000/api/chatbot/vehicles", {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          },
+        });
+
+        const vehicles = await res.json();
+        vehicles.forEach((v) => {
+          const opt = document.createElement("option");
+          opt.value = v.id;
+          opt.textContent = v.model;
+          vehicleSelect.appendChild(opt);
+        });
+      } catch (err) {
+        console.error("Error fetching vehicles:", err);
+        appendMessage("⚠️ Failed to load vehicles.", "bot");
+      }
+    };
+
+    function appendMessage(text, sender) {
+      const div = document.createElement("div");
+      div.className = `msg ${sender}`;
+      
+      if (sender === 'bot') {
+        // Process markdown-like formatting
+        let processedText = text
+          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+          .replace(/\*(.*?)\*/g, '<em>$1</em>')
+          .replace(/`(.*?)`/g, '<code>$1</code>');
+
+        // Check if we should format as list (lines starting with -, *, or 1.)
+        const lines = processedText.split('\n');
+        const isList = lines.some(line => /^[\-\*]/.test(line.trim()) || /^\d+\./.test(line.trim()));
+        
+        if (isList) {
+          let listType = 'ul';
+          if (/^\d+\./.test(lines.find(line => line.trim()).trim())) {
+            listType = 'ol';
+          }
+          
+          let html = `<${listType}>`;
+          lines.forEach(line => {
+            const trimmedLine = line.trim();
+            if (/^[\-\*\d+\.]/.test(trimmedLine)) {
+              const content = trimmedLine.replace(/^[\-\*\d+\.]+/, '').trim();
+              html += `<li>${content}</li>`;
+            } else if (trimmedLine) {
+              html += `<p>${trimmedLine}</p>`;
+            }
+          });
+          html += `</${listType}>`;
+          div.innerHTML = html;
+        } else {
+          // Simple paragraph formatting
+          div.innerHTML = processedText.split('\n\n').map(para => 
+            `<p>${para.replace(/\n/g, '<br>')}</p>`
+          ).join('');
+        }
+      } else {
+        // User messages are plain text
+        div.textContent = text;
+      }
+      
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    async function askChatbot() {
+      const question = userQuestion.value.trim();
+      const vehicleId = vehicleSelect.value;
+
+      if (!question) {
+        appendMessage("Please enter a question first.", "bot");
+        return;
+      }
+
+      if (!token) {
+        appendMessage("You need to be logged in to use the chatbot.", "bot");
+        return;
+      }
+
+      appendMessage(question, "user");
+      userQuestion.value = "";
+
+      try {
+        const res = await fetch("http://localhost:5000/api/chatbot/ask", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+          body: JSON.stringify({ question, vehicleId }),
+        });
+
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+
+        const data = await res.json();
+        appendMessage(data.answer || "I couldn't generate an answer for that question.", "bot");
+      } catch (err) {
+        console.error("Chatbot error:", err);
+        appendMessage("❌ Error contacting the chatbot service. Please try again later.", "bot");
+      }
+    }
+
+    // Allow pressing Enter to submit the question
+    userQuestion.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        askChatbot();
+      }
+    });
+  </script>
+</body>
+</html>

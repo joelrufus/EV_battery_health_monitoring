@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - EV Battery Health</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <!-- Video Background -->
+    <div class="video-container">
+        <video autoplay muted loop id="video-background">
+            <source src="an1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Login Form -->
+    <div class="login-container">
+        <h1>Welcome Back</h1>
+        <p>Login to access your EV Battery Health dashboard.</p>
+        <form id="login-form">
+            <div class="input-group">
+                <input type="email" id="email" placeholder="Email" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="login-button">Login</button>
+        </form>
+        <p class="signup-link">Don't have an account? <a href="../Signup/Signup.html">Sign Up</a></p>
+    </div>
+
+    <script src="Login.js"></script>
+</body>
+</html>

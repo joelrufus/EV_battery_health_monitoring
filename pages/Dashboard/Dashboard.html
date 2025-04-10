@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EV Battery Dashboard</title>
+    <link rel="stylesheet" href="Dashboard.css">
+</head>
+<body>
+
+    <header>
+        <h1>User Dashboard</h1>
+        <div class="user-info">
+            <span id="user-email"></span>
+            <button id="logout-btn">Logout</button>
+        </div>
+    </header>
+
+    <section class="dashboard-options">
+        <div class="option-card" onclick="navigateTo('Visualization/Visualization.html')">
+            <h2>🔍 Battery Data Visualization</h2>
+            <p>Create your vehicle profile, update sessions and view performance analytics</p>
+        </div>
+        
+        <div class="option-card" onclick="window.location.href='http://127.0.0.1:5000/'">
+            <h2>⚡ SOH Prediction</h2>
+            <p>Predict the state of health (SoH) of your EV battery.</p>
+        </div>
+        
+        <div class="option-card" onclick="navigateTo('chatbot/Chatbot.html')">
+            <h2>🤖 Chatbot</h2>
+            <p>Ask any EV-related queries and get personalized recommendations and suggestions</p>
+        </div>
+    </section>
+
+    <script src="Dashboard.js"></script>
+    <video autoplay muted loop id="dashboard-video">
+        <source src="sora1.mp4" type="video/mp4">
+    </video>
+</body>
+</html>

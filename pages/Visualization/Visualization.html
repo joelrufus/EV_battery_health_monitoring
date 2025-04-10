@@ -1,0 +1,62 @@
+<!-- visualization.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElectroCharge Analytics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Electrolize&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Visualization.css">
+</head>
+<body>
+    <div class="cyberpunk-background">
+        <div class="hologram-effect"></div>
+        <div class="power-lines"></div>
+    </div>
+
+    <header class="neon-header">
+        <h1><span class="flicker"></span>ELECTROCHARGE ANALYTICS<span class="flicker"></span></h1>
+    </header>
+
+    <main class="dashboard-container">
+        <div class="cyber-grid">
+            <div class="cyber-card" onclick="navigateTo('../Vehicles/Vehicles.html')">
+                <div class="glow"></div>
+                <i class="fas fa-car-battery"></i>
+                <h3>CREATE VEHICLE PROFILE</h3>
+                <div class="cyber-line"></div>
+                <p>Create a new vehicle profile</p>
+            </div>
+
+            <div class="cyber-card" onclick="navigateTo('../Sessions/Sessions.html')">
+                <div class="glow"></div>
+                <i class="fas fa-bolt"></i>
+                <h3>UPDATE SESSION</h3>
+                <div class="cyber-line"></div>
+                <p>Update sessions in frequent intervals </p>
+            </div>
+
+            
+
+            <div class="cyber-card" onclick="navigateTo('../Graphs/Graphs.html')">
+                <div class="glow"></div>
+                <i class="fas fa-wave-pulse"></i>
+                <h3>ENERGY VISUALIZATION</h3>
+                <div class="cyber-line"></div>
+                <p>View performance analytics</p>
+            </div>
+        </div>
+
+        <section class="session-terminal">
+            <h2 class="terminal-header">ENERGY TRANSFER LOGS</h2>
+            <ul id="session-list" class="hud-display">
+                <!-- Sessions will be populated here -->
+            </ul>
+        </section>
+    </main>
+
+    <script src="Visualization.js"></script>
+    <div class="neon-glow"></div>
+</body>
+</html>

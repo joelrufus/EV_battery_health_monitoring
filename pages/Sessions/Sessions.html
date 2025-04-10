@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Charging Session</title>
+    <link rel="stylesheet" href="Sessions.css">
+</head>
+<body>
+
+    <h2>Log Charging Session</h2>
+    <form id="session-form">
+        <select id="vehicleId"></select>
+        <input type="number" id="startSoC" placeholder="Start SoC (%)" required>
+        <input type="number" id="endSoC" placeholder="End SoC (%)" required>
+        <input type="number" id="chargingDuration" placeholder="Charging Duration (hours)">
+        <input type="number" id="chargingRate" placeholder="Charging Rate (kW)">
+        <input type="number" id="distanceDriven" placeholder="Distance Driven (km)">
+        <input type="number" id="temperature" placeholder="Temperature (°C)">
+        <!-- Sessions.html snippet -->
+        <select id="chargerType">
+            <option value="normal">Normal Charger</option>
+            <option value="fast">Fast Charger</option>
+        </select>
+  
+        
+        <button type="submit">Log Session</button>
+    </form>
+
+    <script src="Sessions.js"></script>
+    
+</body>
+</html>

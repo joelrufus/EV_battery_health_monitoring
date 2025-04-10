@@ -1,0 +1,37 @@
+src/
+│── components/
+│   ├── LandingPage.js
+│   ├── Header.js
+│   ├── LoginSignup.js
+│── assets/
+│   ├── images/ (Store illustrations here)
+│── App.js
+│── index.js
+│── styles.css
+
+
+-----------------------------------------------------------------------------------------------------
+
+EV-BATTERY-HEALTH/
+│── public/
+│── src/
+│   │── assets/  (For images, icons, fonts)
+│   │── components/ (For reusable components)
+│   │── pages/
+│   │   │── Home/
+│   │   │   │── Home.html
+│   │   │   │── Home.css
+│   │   │   │── Home.js
+│   │   │── Login/
+│   │   │   │── Login.html
+│   │   │   │── Login.css
+│   │   │   │── Login.js
+│   │   │── Signup/
+│   │   │   │── Signup.html
+│   │   │   │── Signup.css
+│   │   │   │── Signup.js
+│   │── App.js
+│   │── index.js
+│── styles/  (Global styles if needed)
+│── package.json
+│── README.md

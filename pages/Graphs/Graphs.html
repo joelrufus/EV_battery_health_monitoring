@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battery Analytics Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+    <link rel="stylesheet" href="Graphs.css">
+</head>
+<body>
+    <header class="neon-header">
+        <h1>BATTERY ANALYTICS DASHBOARD</h1>
+    </header>
+
+    <div class="cyber-control">
+        <h3 class="neon-label">SELECT VEHICLE PROFILE</h3>
+        <select id="vehicleSelect" class="cyber-select" onchange="loadGraphs()">
+            <option value="">-- INITIALIZE VEHICLE --</option>
+        </select>
+    </div>
+
+    <div class="cyber-grid">
+        <!-- Depth of Discharge Card -->
+        <div class="cyber-card">
+            <div class="graph-info">
+                <h3 class="neon-green">DEPTH OF DISCHARGE</h3>
+                <p class="neon-explanation">Measures battery cycle depth. Lower depth cycles (20-80%) extend lifespan.</p>
+                <div class="chart-type-selector">
+                    <label>Chart Type:</label>
+                    <select class="cyber-select" data-chartid="depthOfDischargeChart" onchange="changeChartType(this.dataset.chartid, this.value)">
+                        <option value="line" selected>Line</option>
+                        <option value="bar">Bar</option>
+                        <option value="area">Area</option>
+                        <option value="pie">Pie</option>
+                    </select>
+                </div>
+            </div>
+            <canvas id="depthOfDischargeChart"></canvas>
+        </div>
+
+        <!-- Temperature Stress Score Card -->
+        <div class="cyber-card">
+            <div class="graph-info">
+                <h3 class="neon-purple">THERMAL STRESS INDEX</h3>
+                <p class="neon-explanation">Heat impact on battery health. Maintain below 40°C for optimal performance.</p>
+                <div class="chart-type-selector">
+                    <label>Chart Type:</label>
+                    <select class="cyber-select" data-chartid="temperatureStressScoreChart" onchange="changeChartType(this.dataset.chartid, this.value)">
+                        <option value="line" selected>Line</option>
+                        <option value="bar">Bar</option>
+                        <option value="area">Area</option>
+                        <option value="pie">Pie</option>
+                    </select>
+                </div>
+            </div>
+            <canvas id="temperatureStressScoreChart"></canvas>
+        </div>
+
+        <!-- Charging Efficiency Card -->
+        <div class="cyber-card">
+            <div class="graph-info">
+                <h3 class="neon-green">CHARGE EFFICIENCY</h3>
+                <p class="neon-explanation">Energy retention during charging. Higher % = less energy loss.</p>
+                <div class="chart-type-selector">
+                    <label>Chart Type:</label>
+                    <select class="cyber-select" data-chartid="chargingEfficiencyChart" onchange="changeChartType(this.dataset.chartid, this.value)">
+                        <option value="line" selected>Line</option>
+                        <option value="bar">Bar</option>
+                        <option value="area">Area</option>
+                        <option value="pie">Pie</option>
+                    </select>
+                </div>
+            </div>
+            <canvas id="chargingEfficiencyChart"></canvas>
+        </div>
+
+        <!-- Energy per Km Card -->
+        <div class="cyber-card">
+            <div class="graph-info">
+                <h3 class="neon-purple">ENERGY/KM CONSUMPTION</h3>
+                <p class="neon-explanation">Power usage per distance. Track for driving pattern optimization.</p>
+                <div class="chart-type-selector">
+                    <label>Chart Type:</label>
+                    <select class="cyber-select" data-chartid="energyPerKmChart" onchange="changeChartType(this.dataset.chartid, this.value)">
+                        <option value="line" selected>Line</option>
+                        <option value="bar">Bar</option>
+                        <option value="area">Area</option>
+                        <option value="pie">Pie</option>
+                    </select>
+                </div>
+            </div>
+            <canvas id="energyPerKmChart"></canvas>
+        </div>
+    </div>
+
+    <script src="Graphs.js"></script>
+</body>
+</html>

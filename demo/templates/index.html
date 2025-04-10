@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EV Battery Health Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>EV Battery Health Prediction</h1>
+        <form id="batteryForm">
+            <label for="batteryCapacity">Battery Capacity (kWh):</label>
+            <input type="number" id="batteryCapacity" name="batteryCapacity" required>
+
+            <label for="chargingDuration">Charging Duration (hours):</label>
+            <input type="number" id="chargingDuration" name="chargingDuration" required>
+
+            <label for="chargingRate">Charging Rate (kW):</label>
+            <input type="number" id="chargingRate" name="chargingRate" required>
+
+            <label for="socStart">State of Charge (Start %):</label>
+            <input type="number" id="socStart" name="socStart" required>
+
+            <label for="socEnd">State of Charge (End %):</label>
+            <input type="number" id="socEnd" name="socEnd" required>
+
+            <label for="distanceDriven">Distance Driven (km):</label>
+            <input type="number" id="distanceDriven" name="distanceDriven" required>
+
+            <label for="temperature">Temperature (°C):</label>
+            <input type="number" id="temperature" name="temperature" required>
+
+            <label for="vehicleAge">Vehicle Age (years):</label>
+            <input type="number" id="vehicleAge" name="vehicleAge" required>
+
+            <label for="chargerType">Charger Type:</label>
+            <select id="chargerType" name="chargerType" required>
+                <option value="0">DC Fast Charger</option>
+                <option value="1">Level 1</option>
+                <option value="2">Level 2</option>
+            </select>
+
+            <label for="userType">User Type:</label>
+            <select id="userType" name="userType" required>
+                <option value="0">Casual Driver</option>
+                <option value="1">Commuter</option>
+                <option value="2">Long-Distance Traveler</option>
+            </select>
+
+            <button type="submit">Predict SoH</button>
+        </form>
+
+        <div id="predictionResult" class="hidden">
+            <h2>Predicted Battery Health: <span id="batteryHealth"></span>%</h2>
+            <p id="healthStatus"></p>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#batteryForm').on('submit', function(event) {
+                event.preventDefault();
+
+                // Gather form data
+                var formData = $(this).serialize();
+
+                // Send data to the backend for prediction
+                $.post('/predict', formData, function(response) {
+                    $('#batteryHealth').text(response.predicted_soh);
+                    $('#healthStatus').text(response.health_status);
+                    $('#healthStatus').attr('class', response.status_class);
+                    $('#predictionResult').removeClass('hidden');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

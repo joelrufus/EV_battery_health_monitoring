@@ -1,0 +1,53 @@
+<!-- Vehicles.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Management</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="Vehicles.css">
+</head>
+<body>
+    <header class="app-header">
+        <h1>Vehicle Profile Management</h1>
+    </header>
+
+    <main class="container">
+        <section class="form-section">
+            <form id="vehicle-form">
+                <h2>Register New Vehicle</h2>
+                <div class="input-group">
+                    <input type="text" id="vehicleName" placeholder="Vehicle Name (Optional)">
+                </div>
+                <div class="input-group">
+                    <input type="text" id="vehicleModel" placeholder="Vehicle Model" required>
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <input type="number" id="batteryCapacity" placeholder="Battery Capacity (kWh)">
+                    </div>
+                    <div class="input-group">
+                        <input type="number" id="vehicleAge" placeholder="Vehicle Age (years)">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <select id="userType">
+                        <option value="regular">Regular Use</option>
+                        <option value="occasional">Occasional Use</option>
+                        <option value="heavy">Heavy Use</option>
+                    </select>
+                </div>
+                <button type="submit">Create Vehicle Profile</button>
+            </form>
+        </section>
+
+        <section class="vehicle-list">
+            <h2>Registered Vehicles - </h2>
+            <ul id="vehicle-list"></ul>
+        </section>
+    </main>
+
+    <script src="Vehicles.js"></script>
+</body>
+</html>
